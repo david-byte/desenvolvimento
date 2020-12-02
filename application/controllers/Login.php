@@ -8,7 +8,9 @@ class Login extends CI_Controller
         $data = array(
             'title' => 'Home'
         );
-    $this->load->view('login/index', $data);
+        $this->load->view('layout/header');
+        $this->load->view('login/index', $data);
+        $this->load->view('layout/footer');
     
 }
 }
