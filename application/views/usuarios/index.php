@@ -13,7 +13,7 @@
         </nav>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a href="<?php echo base_url('usuarios'); ?>" title="Cadastrar novo usuário" class="btn btn-success btn-sm float-right"><i class="fas fa-user-plus"></i>&nbsp;Novo</a>
+                <a href="<?php echo base_url('usuarios/add'); ?>" title="Cadastrar novo usuário" class="btn btn-success btn-sm float-right"><i class="fas fa-user-plus"></i>&nbsp;Novo</a>
                 <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
             </div>
             <div class="card-body">
@@ -41,8 +41,8 @@
                                     <td class="text-center pr-4"><?php echo ($user->active == 1 ? '<span class="badge badge-info btn-sm">Sim</span>' : '<span class="badge badge-danger btn-sm">Não</span>'); ?></td>
                                     <td><?php echo $user->phone; ?></td>
                                     <td class="text-center">
-                                        <a class="btn btn-sm btn-primary" href="">Editar</a>
-                                        <a class="btn btn-sm btn-danger" href="">Escluir</a>
+                                        <a class="btn btn-sm btn-primary" title="Editar" href=<?php echo base_url('usuarios/edit/'$user->id);?>><i class="fas fa-user-edit"></i>&nbsp;Editar</a>
+                                        <a class="btn btn-sm btn-danger" title="Excluir" href="<?php echo base_url('usuarios/del')?>"><i class="fas fa-user-times"></i>&nbsp;Escluir</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
