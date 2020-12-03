@@ -12,15 +12,16 @@ class Usuarios extends CI_Controller
     public function index()
     {
         $data = array(
-            'title' => 'Usuarios',
+            'title' => 'Usuarios Cadastrados',
             'styles' => array(
                 'vendor/datatables/dataTables.bootstrap4.min.css'
             ),
             'scripts' => array(
                 'vendor/datatables/jquery.dataTables.min.js',
                 'vendor/datatables/dataTables.bootstrap4.min.js',
-                'vendor/datatables/app.js'
+                'vendor/datatables/app.js',
             ),
+            'users' => $this->ion_auth->users()->result()
         );
 
         $this->load->view('layout/header',$data);
