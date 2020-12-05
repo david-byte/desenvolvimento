@@ -7,6 +7,12 @@ class Usuarios extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
+        //verificação de sessao
+        if (!$this->ion_auth->logged_in()) {
+            $this->session->set_flashdata('info', 'Sua sessão expirou!');
+            redirect('login');
+        }
     }
 
     public function index()
@@ -32,60 +38,62 @@ class Usuarios extends CI_Controller
     public function add()
     {
         $this->form_validation->set_rules('first_name', '', 'trim|required');
-            $this->form_validation->set_rules('nome_guerra', '', 'trim|required');
-            $this->form_validation->set_rules('fk_id_posto_graduacao', '', 'trim');
-            $this->form_validation->set_rules('fk_om_id_om', '', 'trim');
-            $this->form_validation->set_rules('email', '', 'trim|required|valid_email|is_unique[users.email]');
-            $this->form_validation->set_rules('phone', '', 'trim');
-            $this->form_validation->set_rules('password', '', 'min_length[5]|max_length[255]');
-            $this->form_validation->set_rules('confirm_password', '', 'matches[password]');
+        $this->form_validation->set_rules('nome_guerra', '', 'trim|required');
+        $this->form_validation->set_rules('fk_id_posto_graduacao', '', 'trim');
+        $this->form_validation->set_rules('fk_om_id_om', '', 'trim');
+        $this->form_validation->set_rules('email', '', 'trim|required|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('phone', '', 'trim');
+        $this->form_validation->set_rules('password', '', 'min_length[5]|max_length[255]');
+        $this->form_validation->set_rules('confirm_password', '', 'matches[password]');
 
-            if ($this->form_validation->run()) {
-                $first_name = $this->security->xss_clean($this->input->post('first_name'));
-                $password = $this->security->xss_clean($this->input->post('password'));
-                $email = $this->security->xss_clean($this->input->post('email'));
-                $additional_data = array(
-                    'first_name' => $this->input->post('first_name'),
-                    '' => $this->input->post(''),
-                    '' => $this->input->post(''),
-                    'active' => $this->input->post('active')
-                );
-                $group = array($this->input->post('profile_user')); // Sets user to admin.
-    
-                $additional_data = $this->security->xss_clean($additional_data);
-                $group = $this->security->xss_clean($group);
-    
-                // comentar a linha 852 do model ion auth
-                if ($this->ion_auth->register($first_name, $password, $email, $additional_data, $group)) {
-                    $this->session->set_flashdata('sucesso', 'Dados salvos com sucesso!');
-                } else {
-                    $this->session->set_flashdata('error', 'Erro ao salvar os dados');
-                }
-    
-                redirect('usuarios');
-    
-                //alterar ion_auth_model
-    
-                /* echo '<pre>';
+        if ($this->form_validation->run()) {
+            $first_name = $this->security->xss_clean($this->input->post('first_name'));
+            $password = $this->security->xss_clean($this->input->post('password'));
+            $email = $this->security->xss_clean($this->input->post('email'));
+            $additional_data = array(
+                'first_name' => $this->input->post('first_name'),
+                'nome_guerra' => $this->input->post('nome_guerra'),
+                'fk_id_posto_graduacao' => $this->input->post('fk_id_posto_graduacao'),
+                'fk_om_id_om' => $this->input->post('fk_om_id_om'),
+                'email' => $this->input->post('email'),
+                'phone' => $this->input->post('phone'),
+            );
+            $group = array($this->input->post('profile_user')); // Sets user to admin.
+
+            $additional_data = $this->security->xss_clean($additional_data);
+            $group = $this->security->xss_clean($group);
+
+            // comentar a linha 852 do model ion auth
+            if ($this->ion_auth->register($first_name, $password, $email, $additional_data, $group)) {
+                $this->session->set_flashdata('sucesso', 'Dados salvos com sucesso!');
+            } else {
+                $this->session->set_flashdata('error', 'Erro ao salvar os dados');
+            }
+
+            redirect('usuarios');
+
+            //alterar ion_auth_model
+
+            /* echo '<pre>';
                 print_r($additional_data);
                 exit();*/
-            } else {
-                //error da validação
-                $data = array(
-                    'title' => 'Cadastrar Usuário'
-                );
-    
-                $this->load->view('layout/header', $data);
-                $this->load->view('usuarios/add');
-                $this->load->view('layout/footer');
-            }
+        } else {
+            //error da validação
+            $data = array(
+                'title' => 'Cadastrar Usuário'
+            );
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('usuarios/add');
+            $this->load->view('layout/footer');
+        }
     }
 
     public function edit($user_id = NULL)
     {
 
         if (!$user_id || !$this->ion_auth->user($user_id)->row()) {
-            $this->session->set_fleshdata('error', 'Usuário não encontrado');
+            $this->session->set_flashdata('error', 'Usuário não encontrado');
             redirect('usuarios');
         } else {
             $this->form_validation->set_rules('first_name', '', 'trim|required');
