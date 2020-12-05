@@ -9,8 +9,8 @@ class Login extends CI_Controller
             'title' => 'Login',
             'h1' => 'SICAIS'
         );
-        $this->load->view('layout/header_login');
-        $this->load->view('login/index', $data);
+        $this->load->view('layout/header',$data);
+        $this->load->view('login/index');
         $this->load->view('layout/footer');
     }
 
