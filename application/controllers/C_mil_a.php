@@ -33,6 +33,45 @@ class C_mil_a extends CI_Controller
         $this->load->view('layout/footer');
     }
 
+    public function add()
+    {
+        
+            $this->form_validation->set_rules('name', '', 'trim|required|max_length[45]|is_unique[c_a_mil.name]');
+            $this->form_validation->set_rules('sigla', '', 'trim|required|max_length[5]|is_unique[c_a_mil.sigla]');
+
+            if ($this->form_validation->run()) {
+
+                $data = elements(
+                    array(
+                        'name',
+                        'sigla'
+                    ),
+                    $this->input->post()
+                );
+
+                $data['name'] = strtoupper($this->input->post('name'));
+                $data['sigla'] = strtoupper($this->input->post('sigla'));
+                //sanitização
+                $data = html_escape($data);
+
+                $this->core_model->insert('c_a_mil', $data);
+                redirect('c_mil_a');
+            } else {
+                //erro de validação
+                $data = array(
+                    'title' => 'Cadastrar Comando Militar de Área',
+                );
+                /* echo '<pre>';
+                print_r($data['c_mil_a']);
+                exit();*/
+
+                $this->load->view('layout/header', $data);
+                $this->load->view('c_mil_a/add');
+                $this->load->view('layout/footer');
+            }
+      
+    }
+
     public function edit($id_c_a_mil = NULL)
     {
         if (!$id_c_a_mil || !$this->core_model->get_by_id('c_a_mil', array('id_c_a_mil' => $id_c_a_mil))) {
@@ -74,6 +113,11 @@ class C_mil_a extends CI_Controller
                 $this->load->view('layout/footer');
             }
         }
+    }
+
+    public function del()
+    {
+        
     }
 
     // verificação callback do nome do C Mil A 

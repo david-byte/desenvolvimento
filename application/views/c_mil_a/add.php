@@ -16,23 +16,26 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a href="<?php echo base_url('c_mil_a/'); ?>" title="Voltar" class="btn btn-success btn-sm float-right"><i class="fas fa-arrow-left"></i>&nbsp;Voltar</a>
+               
             </div>
             <div class="card-body">
-    
                 <form method="POST" name="form_add">
-                    <div class="form-group row d-flex justify-content-center">
-                        <div class="col-md-6">
-                            <label>Nome do Comando Militar de Área:</label>
-                            <input type="text" class="form-control" name="name" value="<?php echo set_value('name'); ?>" placeholder="Nome do Comando Militar de Área" required>
+                    <div class="form-group d-flex justify-content-center">
+                        <div class="col-md-4">
+                            <label>Comando Militar de Área:</label>
+                            <input type="text" class="form-control" name="name" value="<?php echo set_value('name'); ?>" placeholder="Comando Militar de Área">
                             <?php echo form_error('name', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4">
                             <label>Sigla:</label>
-                            <input type="text" class="form-control mb-2" name="sigla" value="<?php echo set_value('sigla'); ?>" placeholder="Sigla" requireds>
+                            <input type="text" class="form-control" name="sigla" value="<?php echo set_value('sigla'); ?>" placeholder="Sigla">
                             <?php echo form_error('sigla', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-sm mr-3">Salvar</button>
+                    <a href="<?php echo base_url('c_mil_a/'); ?>" title="Voltar" class="btn btn-success btn-sm">Voltar</a>
+                    </div>
                 </form>
             </div>
         </div>
