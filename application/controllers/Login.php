@@ -27,9 +27,6 @@ class Login extends CI_Controller
         } else {
             $this->session->set_flashdata('error', 'Verifique seu e-mail ou senha');
             redirect('login');
-            echo '<pre>';
-            print_r($identity);
-            exit();
         }
     }
 
