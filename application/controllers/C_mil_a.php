@@ -115,9 +115,15 @@ class C_mil_a extends CI_Controller
         }
     }
 
-    public function del()
+    public function del($id_c_a_mil = NULL)
     {
-        
+        if (!$id_c_a_mil || !$this->core_model->get_by_id('c_a_mil', array('id_c_a_mil' => $id_c_a_mil))) {
+            $this->session->set_fleshdata('erro', 'Comando Militar de Área não encontrado');
+            redirect('c_mil_a');
+        } else {
+            $this->core_model->delete('c_a_mil', array('id_c_a_mil' => $id_c_a_mil));
+            redirect('c_mil_a');
+        }
     }
 
     // verificação callback do nome do C Mil A 
