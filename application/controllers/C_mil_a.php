@@ -49,7 +49,7 @@ class C_mil_a extends CI_Controller
             } else {
                 //erro de validação
                 $data = array(
-                    'title' => 'Comando Militar de Área',
+                    'title' => 'Atualizar o Comando Militar de Área',
                     'c_mil_a' => $this->core_model->get_by_id('c_a_mil', array('id_c_a_mil' => $id_c_a_mil))
                 );
                 echo '<pre>';
